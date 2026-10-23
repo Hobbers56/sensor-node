@@ -1,0 +1,5 @@
+sensor-env/
+data/images/*.jpg
+data/logs/
+__pycache__/
+*.pyc

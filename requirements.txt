@@ -1,0 +1,4 @@
+gpiozero
+lgpio
+mpu6050-raspberrypi
+picamzero
