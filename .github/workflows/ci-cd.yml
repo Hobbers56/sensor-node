@@ -27,3 +27,32 @@ jobs:
         run: |
           bandit -r src/
 
+  sbom-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name : Syft and Grype SBOM Scan
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+
+    - name: Generate SBOM
+      run: |
+        syft ./requirements.txt -o spdx-json > sbom.json -o table
+
+    - name: Scan SBOM for vulnerabilities
+      run: |
+        grype sbom:sbom.json --fail-on high -o json > grype-report.json
+    
+    - name: Upload SBOM and Grype Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sbom-and-grype-report
+        path: |
+          sbom.json
+          grype-report.json
