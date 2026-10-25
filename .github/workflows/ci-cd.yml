@@ -42,7 +42,7 @@ jobs:
 
     - name: Generate SBOM
       run: |
-        syft ./requirements.txt -o spdx-json > sbom.json -o table
+        syft dir:. -o spdx-json=sbom.json -o table
 
     - name: Scan SBOM for vulnerabilities
       run: |
