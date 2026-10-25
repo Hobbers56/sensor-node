@@ -1,4 +1,4 @@
-gpiozero
-lgpio
-mpu6050-raspberrypi
-picamzero
+gpiozero==2.0.1
+lgpio==0.2.2.0
+mpu6050-raspberrypi==1.2
+picamzero==1.1.0
